@@ -60,6 +60,7 @@ namespace MisLibros_OCME
             {
                 endpoints.MapControllers();
             });
+            AppDbinitialer.Seed(app);
         }
     }
 }
