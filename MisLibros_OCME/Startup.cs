@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MisLibros_OCME.Data;
+using MisLibros_OCME.Data.Models;
+using MisLibros_OCME.Data.services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +35,11 @@ namespace MisLibros_OCME
         {
 
             services.AddControllers();
+
             services.AddDbContext<AppDbcontext>(options => options.UseSqlServer(ConnectionString));
+
+            services.AddTransient<bookservice>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MisLibros_OCME", Version = "v1" });
