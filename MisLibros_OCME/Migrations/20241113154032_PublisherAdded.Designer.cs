@@ -3,36 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MisLibros_OCME.Data;
 
 namespace MisLibros_OCME.Migrations
 {
     [DbContext(typeof(AppDbcontext))]
-    partial class AppDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20241113154032_PublisherAdded")]
+    partial class PublisherAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("MisLibros_OCME.Data.Models.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Authors");
-                });
 
             modelBuilder.Entity("MisLibros_OCME.Data.Models.Book", b =>
                 {
@@ -78,28 +65,6 @@ namespace MisLibros_OCME.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("MisLibros_OCME.Data.Models.Book_Authos", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Book_Authors");
-                });
-
             modelBuilder.Entity("MisLibros_OCME.Data.Models.Publisher", b =>
                 {
                     b.Property<int>("ID")
@@ -112,7 +77,7 @@ namespace MisLibros_OCME.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Publishers");
+                    b.ToTable("Publisher");
                 });
 
             modelBuilder.Entity("MisLibros_OCME.Data.Models.Book", b =>
@@ -124,35 +89,6 @@ namespace MisLibros_OCME.Migrations
                         .IsRequired();
 
                     b.Navigation("Publisher");
-                });
-
-            modelBuilder.Entity("MisLibros_OCME.Data.Models.Book_Authos", b =>
-                {
-                    b.HasOne("MisLibros_OCME.Data.Models.Author", "Author")
-                        .WithMany("Book_Authors")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MisLibros_OCME.Data.Models.Book", "Book")
-                        .WithMany("Book_Authors")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("MisLibros_OCME.Data.Models.Author", b =>
-                {
-                    b.Navigation("Book_Authors");
-                });
-
-            modelBuilder.Entity("MisLibros_OCME.Data.Models.Book", b =>
-                {
-                    b.Navigation("Book_Authors");
                 });
 
             modelBuilder.Entity("MisLibros_OCME.Data.Models.Publisher", b =>
