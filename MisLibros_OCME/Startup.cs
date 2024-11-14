@@ -39,6 +39,8 @@ namespace MisLibros_OCME
             services.AddDbContext<AppDbcontext>(options => options.UseSqlServer(ConnectionString));
 
             services.AddTransient<bookservice>();
+            services.AddTransient<Authorservice>();
+            services.AddTransient<PublishersService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -66,7 +68,7 @@ namespace MisLibros_OCME
             {
                 endpoints.MapControllers();
             });
-            AppDbinitialer.Seed(app);
+            //AppDbinitialer.Seed(app);
         }
     }
 }
