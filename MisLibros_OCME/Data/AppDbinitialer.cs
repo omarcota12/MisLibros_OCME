@@ -27,7 +27,6 @@ namespace MisLibros_OCME.Data
                         DateRead = DateTime.Now.AddDays(-10),
                         Rate = 4,
                         Genero = "biography",
-                        Autor = "1st Author",
                         CoverUrl = "https...",
                         DateAdded = DateTime.Now,
                     },
@@ -38,7 +37,6 @@ namespace MisLibros_OCME.Data
                         IsRead = true,
                         Rate = 4,
                         Genero = "biography",
-                        Autor = "2nd Author",
                         CoverUrl = "https...",
                         DateAdded = DateTime.Now,
 

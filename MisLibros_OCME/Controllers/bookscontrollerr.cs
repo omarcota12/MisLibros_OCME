@@ -29,10 +29,10 @@ namespace MisLibros_OCME.Controllers
             return Ok(book);
         }
 
-        [HttpPost("add-book")]
+        [HttpPost("add-book-with-authors")]
         public IActionResult Addbook([FromBody] bookVM book)
         {
-            _bookservice.AddBook(book);
+            _bookservice.AddBookwithAuthors(book);
             return Ok();
         }
 

@@ -16,7 +16,7 @@ namespace MisLibros_OCME.Data.services
 
         }
 
-        public void AddBook(bookVM book)
+        public void AddBookwithAuthors(bookVM book)
         {
             var _book = new Book()
             {
@@ -25,22 +25,33 @@ namespace MisLibros_OCME.Data.services
                 IsRead = book.IsRead,
                 DateRead = book.DateRead,
                 Rate = book.Rate,
-                Genero = book.Genero,
-                Autor = book.Autor,
+                Genero = book.Genero,               
                 CoverUrl = book.CoverUrl,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                PublisherId = book.PublisherID
 
             };
             _context.Books.Add(_book);
             _context.SaveChanges();
 
+            foreach (var id in book.AutorIDs)
+            {
+                var _book_author = new Book_Authos()
+                {
+                    BookId = _book.Id,
+                    AuthorId = id
+                };
+                _context.Book_Authors.Add(_book_author);
+                _context.SaveChanges();
+
+            }
         }
         public List<Book> GetAllBks() => _context.Books.ToList();
-        public Book GetBookByID(int bookid) => _context.Books.FirstOrDefault(n => n.id == bookid);
+        public Book GetBookByID(int bookid) => _context.Books.FirstOrDefault(n => n.Id == bookid);
 
         public Book UpdateBookByID(int bookid, bookVM book)
         {
-            var _book = _context.Books.FirstOrDefault(n =>n.id == bookid);
+            var _book = _context.Books.FirstOrDefault(n =>n.Id == bookid);
             if(_book !=null )
             {
                 _book.Titulo = book.Titulo;
@@ -49,7 +60,6 @@ namespace MisLibros_OCME.Data.services
                 _book.DateRead = book.DateRead;
                 _book.Rate = book.Rate;
                 _book.Genero = book.Genero;
-                _book.Autor = book.Autor;
                 _book.CoverUrl = book.CoverUrl;
 
                 _context.SaveChanges();
@@ -59,7 +69,7 @@ namespace MisLibros_OCME.Data.services
         }
         public void DeletebookById(int bookid)
         {
-            var _book = _context.Books.FirstOrDefault(n => n.id == bookid);
+            var _book = _context.Books.FirstOrDefault(n => n.Id == bookid);
             if(_book != null )
             {
                 _context.Books.Remove( _book );
