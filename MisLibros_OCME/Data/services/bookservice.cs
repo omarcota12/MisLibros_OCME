@@ -47,7 +47,22 @@ namespace MisLibros_OCME.Data.services
             }
         }
         public List<Book> GetAllBks() => _context.Books.ToList();
-        public Book GetBookByID(int bookid) => _context.Books.FirstOrDefault(n => n.Id == bookid);
+        public BookWithAuthorsVM GetBookByID(int bookid)
+        {
+            var _bookWithAuthors = _context.Books.Where(n => n.Id == bookid).Select(Book => new BookWithAuthorsVM()
+            {
+                Titulo = Book.Titulo,
+                Descripcion = Book.Descripcion,
+                IsRead = Book.IsRead,
+                DateRead = Book.DateRead,
+                Rate = Book.Rate,
+                Genero = Book.Genero,
+                CoverUrl = Book.CoverUrl,
+                PublisherName = Book.Publisher.Name,
+                AuthorNames = Book.Book_Authors.Select(n => n.Author.Name).ToList()
+            }).FirstOrDefault();
+            return _bookWithAuthors;
+        }
 
         public Book UpdateBookByID(int bookid, bookVM book)
         {
