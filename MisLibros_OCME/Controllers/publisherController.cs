@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MisLibros_OCME.Data.Models;
 using MisLibros_OCME.Data.services;
 using MisLibros_OCME.Data.ViewModels;
+using System;
 
 namespace MisLibros_OCME.Controllers
 {
@@ -19,11 +20,18 @@ namespace MisLibros_OCME.Controllers
         [HttpPost("add-publisher")]
         public IActionResult AddPublisher([FromBody] PublisherVM publisher)
         {
+            try
+            { 
             var newPublisher = _publisherServices.AddPublisher(publisher);
             return Created(nameof(AddPublisher), newPublisher);
-        }
-
-        [HttpGet("get-publisher-By-id/{id}")]
+            }
+          
+        catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+} 
+    [HttpGet("get-publisher-By-id/{id}")]
         public IActionResult GetPublisherById(int id)
         {
             var _response = _publisherServices.GetPublisherData(id);
@@ -48,8 +56,17 @@ namespace MisLibros_OCME.Controllers
         [HttpDelete("delete-publisher-by-id/{id}")]
         public IActionResult DeletePublisherById(int id)
         {
+            try
+            {
+                
             _publisherServices.DeletePublisherById(id);
             return Ok();
+            }
+            
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -53,6 +53,10 @@ namespace MisLibros_OCME.Data.services
                 _context.Publishers.Remove(_publisher);
                 _context.SaveChanges();
             }
+            else
+            {
+                throw new Exception($"La editora con el id: {id} no existe");
+            }
         }
     }
 }
