@@ -19,8 +19,23 @@ namespace MisLibros_OCME.Controllers
         [HttpPost("add-publisher")]
         public IActionResult AddPublisher([FromBody] PublisherVM publisher)
         {
-            _publisherServices.AddPublisher(publisher);
-            return Ok();
+            var newPublisher = _publisherServices.AddPublisher(publisher);
+            return Created(nameof(AddPublisher), newPublisher);
+        }
+
+        [HttpGet("get-publisher-By-id/{id}")]
+        public IActionResult GetPublisherById(int id)
+        {
+            var _response = _publisherServices.GetPublisherData(id);
+            if (_response != null)
+            {
+                return Ok(_response);
+
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("get-publisher-books-with-authors/{id}")]

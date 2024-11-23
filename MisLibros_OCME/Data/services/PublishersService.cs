@@ -15,7 +15,7 @@ namespace MisLibros_OCME.Data.services
 
         }
 
-        public void AddPublisher(PublisherVM publisher)
+        public Publisher AddPublisher(PublisherVM publisher)
         {
             var _publisher = new Publisher()
             {
@@ -24,7 +24,11 @@ namespace MisLibros_OCME.Data.services
             };
             _context.Publishers.Add(_publisher);
             _context.SaveChanges();
+
+            return _publisher;
         }
+
+        public Publisher GetPublisherByID(int id) => _context.Publishers.FirstOrDefault(n => n.ID == id);
 
         public PublisherWithBooksAndAuthorsVM GetPublisherData(int publisherId)
         {
